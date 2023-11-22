@@ -1,0 +1,133 @@
+
+<html>
+	<head>
+		<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>
+		<script src="https://surikov.github.io/webaudiofontdata/sound/0000_JCLive_sf2_file.js"></script>
+    
+    <script src="includes/webgl/webgl-utils.js"></script>
+    <script src="includes/webgl/m3.js"></script>
+    <!-- 
+      <link rel="stylesheet" href="styles.css">
+		Got tired of the caching system 
+    -->
+    <style>
+      body {
+        background-color: rgb(48, 5, 59);
+        width: 100%;
+        Height: 100%;
+        margin: 0 auto;
+        border:0px solid white;
+        overflow: hidden;
+        padding: 0px;
+      }
+      canvas {
+          position: absolute;
+          top: 0;
+          left: 0;
+          background:transparent;
+      }
+    </style>
+
+	</head>
+
+	<body id="body" >
+		<div class="wrapper">
+      <canvas id="layer0" width="800" height="800"></canvas>
+      <canvas id="layer1" width="800" height="800"></canvas>
+      <canvas id="layerUI" width="400" height="300"></canvas>
+      
+    </div>
+	</body>
+</html>
+<script>
+
+
+
+//got tired of js caching and the browser running old code...
+//load files manually, tacking as stub request parameter to the url as a way to make the url unique
+var Arrgh = "" + Date.now();
+
+loadScriptSync ("includes/helpers/log.js?C="+Arrgh);
+
+//ui Generic UI System uncludes
+loadScriptSync ("includes/uiSystem/uiColor.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiResources.js?C="+Arrgh); //this first
+loadScriptSync ("includes/uiSystem/uiGlobals.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiDraw.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiMouse.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiBaseObject.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiFrame.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiLabel.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiPanel.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiSlider.js?C="+Arrgh);
+loadScriptSync ("includes/uiSystem/uiListbox.js?C="+Arrgh);
+
+//application specific includes
+loadScriptSync ("includes/appResources/appResources.js?C="+Arrgh);
+
+loadScriptSync ("includes/appFiles/appGlobals.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/appModule.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/appCanvasManager.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/shader/appShaderFnsRegistry.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/shader/appKeyDownArrayEffect.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/shader/appShaderToyEffect.js?C="+Arrgh);
+
+
+
+loadScriptSync ("includes/appFiles/midiAppFiles/midiMessage.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/midiVoicesList.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/midiPercussionsList.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/midiFile.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/midiInput.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/midiOutput.js?C="+Arrgh);
+
+loadScriptSync ("includes/appFiles/midiChannelMapping.js?C="+Arrgh);
+
+
+loadScriptSync ("includes/appFiles/keyboardDevice/kdNote.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/keyboardDevice/kdKeyboardKey.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/keyboardDevice/kdKeyboard.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/keyboardDevice/kdChannel.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/keyboardDevice/appKeyboardDevice.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/midiChannels.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/keyboardDevice/kdOptionsPanel.js?C="+Arrgh);
+
+loadScriptSync ("includes/appFiles/noteFountain/nfNoteFountainRegion.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/noteFountain/nfNoteTargetLines.js?C="+Arrgh);
+loadScriptSync ("includes/appFiles/noteFountain/nfUINoteFountain.js?C="+Arrgh);
+
+loadScriptSync ("includes/appFiles/midiAccess.js?C="+Arrgh);
+
+loadScriptSync ("appMain.js?C="+Arrgh); /*this one must be the last one for the inline code to work*/
+function loadScriptSync (src) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.type = "text/javascript";
+    s.async = false;                                 // <-- this is important
+    document.getElementsByTagName('head')[0].appendChild(s);
+}
+
+
+const dropArea = document.getElementById('layerUI');
+
+dropArea.addEventListener('dragover', (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  // Style the drag-and-drop as a "copy file" operation.
+  event.dataTransfer.dropEffect = 'copy';
+});
+
+dropArea.addEventListener('drop', (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  const fileList = event.dataTransfer.files;
+
+  var file = fileList[0];
+
+  midiFileReader.openFile(file);
+
+
+    
+  });
+
+</script>
