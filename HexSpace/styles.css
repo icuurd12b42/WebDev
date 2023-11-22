@@ -1,0 +1,161 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+  }
+  canvas {
+	display: block;
+  }
+  
+  .floating-window {
+	--header-height: 18px;
+	--body-height: calc(100% - var(--header-height));
+	--tabs-container-height: 100%;
+	--tabs-buttons-container-height: 40px;
+	--tabs-buttons-height: calc(var(--tabs-buttons-container-height) - 4px);
+	--tabs-panels-height: calc(100% - var(--tabs-buttons-container-height));
+	--panels-height:100%;
+
+	--window-back-color:rgb(163, 163, 163);
+	--window-header-color:rgb(97, 97, 97);
+	--panel-button-hover-color:#979797;
+	opacity: .5;
+	transition: opacity 0.5s ease-in-out;
+	padding: 1px;
+	margin: 1px;
+	position: absolute;
+	cursor: default;
+	top: 0px;
+	left: 0px;
+	width: 350px;
+	height: 300px;
+	border: 1px solid #000;
+	background-color: var(--window-back-color);
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+	   -moz-user-select: none; /* Old versions of Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently
+								  supported by Chrome, Edge, Opera and Firefox */
+  }
+  .floating-window:hover {
+	opacity: .9;
+  }
+  .floating-window .header {
+	background-color: var(--window-header-color);
+	padding: 2px;
+	cursor: pointer;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+
+	box-sizing: border-box;
+	height:var(--header-height);
+	width: 100%;
+  }
+
+  .floating-window .body {
+	background-color: var(--window-back-color);
+	padding: 2px;
+	cursor: pointer;
+	box-sizing: border-box;
+	
+	box-sizing: border-box;
+	height: var(--body-height);
+	width: 100%;
+  }
+
+  .floating-window .header .xbutton {
+	font-size: 10px;
+	float: right;
+	background-color: var(--window-header-color);
+	padding: 0px;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	box-sizing: border-box;
+   
+  }
+.fpsdiv {
+	float: right;
+	cursor: default;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 10px;
+	padding-right: 2px;
+	background-color: var(--window-back-color);
+	box-sizing: border-box;
+	height: var(--tabs-buttons-height);
+	width:60px;
+  }
+ 
+  .floating-window .tabsContainer{
+	cursor: default;
+	background-color: var(--window-back-color);
+	box-sizing: border-box;
+	height: var(--tabs-container-height);
+	width: 100%;
+	overflow: hidden;
+  }
+  .floating-window .tabsContainer .tabButtonsContainer {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+	grid-gap: 3px;
+	cursor: default;
+	background-color: var(--panel-button-hover-color);
+	box-sizing: border-box;
+	height: var(--tabs-buttons-container-height);
+	width: 100%;
+	border: none;
+	outline: none;
+  }
+  .floating-window .tabsContainer .tabButtonsContainer button {
+	cursor: default;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 6px;
+	
+	border: 1px solid #6c6c6c;
+	border-bottom-width:0px;
+	background-color: var(--window-back-color);
+	height: var(--tabs-buttons-height);
+
+  }
+  .floating-window .tabsContainer .tabButtonsContainer button:hover {
+	background-color: var(--panel-button-hover-color);
+  }
+  .floating-window .tabsContainer .tabPanels  {
+	background-color: var(--panel-button-hover-color);
+	
+	box-sizing: border-box;
+	height: var(--tabs-panels-height);;
+	width: 100%;
+  }
+  .floating-window .tabsContainer .tabPanels .tabPanel{
+	background-color: var(--panel-button-hover-color);
+	text-align: left;
+	padding:5px;
+	box-sizing: border-box;
+	height: var(--panels-height);
+	width: 100%;
+  }
+
+  .propertiesTable {
+	table-layout: fixed;
+	box-sizing: border-box;
+	width: 100%;
+  }
+  
+  .propertiesTable td, .propertiesTable th {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	box-sizing: border-box;
+  }

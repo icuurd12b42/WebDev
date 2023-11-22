@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>HexSpace</title>
+    
+	<script src="includes/vectors.js"></script>
+    <script src="includes/hexgrid.js"></script>
+    <script src="includes/inputs.js?"></script>
+	<script src="includes/helpers.js"></script>
+	<script src="includes/drawing.js?"></script>
+	<script src="includes/floatingwindow.js"></script>
+    <script src="includes/camera.js"></script>
+
+    <script src="includes/entities.js"></script>
+
+	
+    
+    <link rel="stylesheet" href="styles.css">
+  </head>
+<!--
+					use pannelName to link panels to their tab buttons 
+					use varName to specify the options variables name in code. REQUIRED for variables
+					use groupName to specify the options group in code. REQUIRED for variables
+					like below options.CONTROLMODE.WASDQE will be created and managed
+								
+				-->
+  <body>
+    <canvas id="canvas"></canvas>
+
+	<div class="floating-window">
+		<div class="header">
+		  Console
+		  <button class="xbutton">&#10006</button>
+		</div>
+		<div class="body">
+
+			<div class="tabsContainer">
+				
+				<div class="tabButtonsContainer">
+					<button pannelName="SelectedEntity" selected>Sel<br>Entity</button>
+					<button pannelName="Debug">Debug</button>
+					<button pannelName="ShipControl">Ship Control</button>
+					<button pannelName="4">Tab 4</button>
+					<div class="fpsdiv">
+						<label class="label" groupName="PERFORMANCE" varName="FPS"></label>
+					</div>
+				</div>
+				
+				<div class="tabPanels">
+					
+					<div class="tabPanel" pannelName="ShipControl">
+
+						<fieldset>
+							
+							<legend>Control Mode</legend>
+							<label>
+								<input type="radio" name="CONTROLMODE" groupName="CONTROLMODE" varName="WASDQE" checked>WASD+QE
+							</label><br>
+							<label>
+								<input type="radio" name="CONTROLMODE" groupName="CONTROLMODE" varName="WAYPOINTS">Mouse Waypoints
+							</label><br>
+						</fieldset>
+						<fieldset>
+							<legend>Drive Mode</legend>
+							<label>
+								<input type="checkbox" name="DRIVEMODE" groupName="DRIVEMODE" varName="ROTATE">Rotate
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRIVEMODE" groupName="DRIVEMODE" varName="STRAFFE">Straffe
+							</label><br>
+						</fieldset>
+						
+					</div>
+					<div class="tabPanel" pannelName="Debug">
+						<fieldset>
+							<legend>Draw Entity</legend>
+							
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWRADIUS" >Instances Shape Radius
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWRECTANGLE" >Instances Shape Rectangle
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWINVISIBLES">Hidden Instances
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWINVISIBLECHILDREN">Hidden Children Instances
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWINVISIBLEFLUFF">Hidden Fluff
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWOUTOFVIEW">Instances out of view
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWAIDETAILS">Instances AI details
+							</label><br>
+							<label>
+								<input type="checkbox" name="DRAW" groupName="DEBUG" varName="DRAWSHAPE"  checked>Instances Shape
+							</label><br>
+							
+						</fieldset>
+					</div>
+					<div class="tabPanel" pannelName="SelectedEntity">
+						<fieldset>
+								
+							<legend>Details</legend>
+							<label>ID:</label><label class="label" groupName="SELECTEDENTITY" varName="ID"></label><br>
+							<label>type:</label><label class="label" groupName="SELECTEDENTITY" varName="TYPE"></label><br>
+							
+							
+						</fieldset>
+						<fieldset>
+							<legend>Movement</legend>
+							<table class="propertiesTable" border="1">
+								<tr>
+									<td width="15%" ><label>Speed:</label></td>
+									<td width="35%" align="center"><label class="label" groupName="SELECTEDENTITY" varName="SPEED">unknown</label></td>
+									<td width="15%" ><label>Direction:</label></td>
+									<td width="35%" align="center"><label class="label" groupName="SELECTEDENTITY" varName="DIRECTION">unknown</label></td>
+								
+								</tr>
+								<tr>
+									<td width="15%" ><label>Spin:</label></td>
+									<td width="35%" align="center"><label class="label" groupName="SELECTEDENTITY" varName="SPIN">unknown</label></td>
+									<td width="15%" ><label>Angle:</label></td>
+									<td width="35%" align="center"><label class="label" groupName="SELECTEDENTITY" varName="ANGLE">unknown</label></td>
+									
+								</tr>
+								<tr>
+									<td width="15%" ><label>Vel:</label></td>
+									<td width="35%" align="center"><label class="label" groupName="SELECTEDENTITY" varName="VEL">unknown</label></td>
+									<td width="15%" ><label>Pos:</label></td>
+									<td width="35%" align="center"><label class="label" groupName="SELECTEDENTITY" varName="POS">unknown</label></td>
+									
+								</tr>
+									
+							</table>
+
+						</fieldset>
+						<fieldset>
+							<legend>AI Values</legend>
+							<table class="propertiesTable" border="1">
+								<tr>
+									<td width="15%" ><label>Speed:</label></td>
+									<td width="15%" align="center"><label class="label" groupName="GV" varName="VN">VAL</label></td>
+									<td width="15%" ><input type="text" name="0" value="0"></td>
+									<td width="60%" align="center"><input type="range" min="1" max="100" value="50" class=slider></td>
+									<td width="15%" ><input type="text" name="0" value="0"></td>
+									
+								
+								</tr>
+								
+									
+							</table>
+
+						</fieldset>
+					</div>
+					<div class="tabPanel" pannelName="4">Tab 4:Content</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </body>
+</html>
+
+<script>
+	var world = new Entity;
+	const canvas = document.getElementById('canvas');
+
+	const ctx = canvas.getContext('2d');
+	var globals = {
+		camera: new Camera(canvas),
+		zoom: {
+				zooms: [1 / 16, 1 / 8, 1 / 4, 1 / 2, 1, 2, 4, 8, 16],
+				at: 5,
+				factor: 2, //match with zooms[at] entry
+				factorRequested:2,
+			},
+		viewUpdateHook:null, //the function that will update the camera anchor position
+		world: world, //the main entity in charge of the root simulation
+		drawing: {
+			canvas: canvas,
+			ctx: ctx
+		}
+	};
+
+	
+
+	
+	const hww = window.innerWidth/4;
+	const hwh = window.innerHeight/4;
+	world.setShape([[-hww,-hwh],[hww,-hwh],[hww,hwh],[-hww,hwh],[-hww,-hwh]]);
+	world.visibleSelf = false; //hide the instance because this one is the main sim
+
+	const MoveViewButton = 4; 
+	//see documentMouseEvents
+	function canvasMouseEvents(event)
+	{
+		stepMouse(event);
+		event.preventDefault();
+		if (event.buttons === MoveViewButton) {
+			const movement = new Vector2D(-event.movementX, -event.movementY);
+			const worldMovement = globals.camera.portToWorldScale(movement);
+			globals.camera.updateRadius();
+			globals.camera.addOffset(worldMovement);
+		}
+	}
+	function canvasWheelEvents(event)
+	{
+		//get the wheel tick movement, convert to -1,1 and use that to go to next/prev zoom index
+		globals.zoom.at -= Math.sign(event.deltaY);
+		globals.zoom.at = Math.min(Math.max(0, globals.zoom.at), globals.zoom.zooms.length - 1); //clamp
+
+		globals.zoom.factorRequested = globals.zoom.zooms[globals.zoom.at];
+		globals.camera.setZoomFactor(globals.zoom.factorRequested,Vecc2g.setXY(event.clientX,event.clientY));
+	}
+
+
+
+	const floatingWindowHeader = document.querySelector('.floating-window .header');
+	setFloatingWindowHeader(floatingWindowHeader);
+
+	
+	//the Tools Window move code to use 
+	//var floatingWindowHeader = document.querySelector('.floating-window .header');
+
+	window.addEventListener('load', (event) => {
+
+		canvas.addEventListener("click", canvasMouseEvents); //this one breaks the checkboxes
+		canvas.addEventListener("contextmenu", canvasMouseEvents);
+		canvas.addEventListener("dblclick", canvasMouseEvents);
+		canvas.addEventListener("mousedown", canvasMouseEvents);
+		canvas.addEventListener("mouseenter", canvasMouseEvents);
+		canvas.addEventListener("mouseleave", canvasMouseEvents);
+		canvas.addEventListener("mousemove", canvasMouseEvents);
+		canvas.addEventListener("mouseout", canvasMouseEvents);
+		canvas.addEventListener("mouseover", canvasMouseEvents);
+		canvas.addEventListener("mouseup", canvasMouseEvents);
+		canvas.addEventListener("wheel", canvasWheelEvents);
+		canvas.focus();
+		
+	});
+
+
+	
+
+	/////////////////
+	//Code selecting the tab panels
+	//the tabs container select code on the floating window
+	//it match the .getAttribute('pannelName') of a tab button to a panel
+	//to activate the panel and change the back colors to show the tab is active
+	//const element = document.querySelector('[style*="--panel-active-color"]');
+	//const style = getComputedStyle(element);
+	//const panelActiveColor = style.getPropertyValue('--panel-active-color');
+	panelActiveColor = "#979797";
+	var tabButtons = document.querySelectorAll(".tabsContainer .tabButtonsContainer button");
+	var tabPanels = document.querySelectorAll(".tabsContainer .tabPanel")
+	var panelct = -1;
+	var panelSelected = 0;
+	//for each tab buttons
+
+	tabButtons.forEach(button => 
+	{
+		//detect if the element has the selected tag
+		panelct++;
+		if(button.getAttribute('selected')!==null)
+		{
+			panelSelected = panelct;
+		}
+		
+			
+		//hook to click event to the tab button
+		button.addEventListener("click",e => {
+			//when clicked
+			//reset all the button back color to default
+			tabButtons.forEach(b2 => {b2.style.backgroundColor="";});
+			//and set this one to selected
+			e.target.style.backgroundColor=panelActiveColor;
+			//Find the related pannelName panel looping through all of them
+			tabPanels.forEach(panel => 
+			{
+				//set the to the hidden and default color
+				panel.style.display="none";
+				panel.style.backgroundColor="";
+				//but if it's the relate panel, set it to visible and selected color
+				if(panel.getAttribute('pannelName') == e.target.getAttribute('pannelName')) 
+				{
+					panel.style.display="block";
+					panel.style.backgroundColor=panelActiveColor;
+				}
+			});
+		});
+	});
+	//select the selected tab
+	tabButtons[panelSelected].dispatchEvent(
+		new MouseEvent('click', { view: window,  bubbles: true,  cancelable: true})
+		);
+	//Tab panels done
+	/////////////////
+	
+	// Setup the options object
+	var options = {};
+
+	// Find the elements that have a groupName and varName and shove them in 
+	// options.GROUPNAME_VARNAME
+	// this way I don't have to manually manage js variables every time I add or remove 
+	// something in the options
+	var elements = document.querySelectorAll('input[type="checkbox"], input[type="radio"], select, label');
+
+	elements.forEach(e => 
+	{
+		if (e.hasAttribute('groupName') && e.hasAttribute('varName'))
+		{
+			const groupName = e.getAttribute('groupName').toUpperCase();
+			const varName = e.getAttribute('varName').toUpperCase();
+
+			if (!exists(options[groupName]))
+			{
+				options[groupName] = {};
+			}
+
+			options[groupName][varName] = e;
+
+			// Add getter and setter for the text property
+			Object.defineProperty(e, 'text', 
+			{
+				get: function()
+				{
+					return this.innerText;
+				},
+				set: function(value)
+				{
+					this.innerText = value;
+				},
+				enumerable: true,
+				configurable: true
+			});
+		}
+	});
+
+	console.log("options", options);
+	console.log("globals", globals)
+	
+</script>
+
+<script src="main.js"></script>
+
+
+<script src="_currentTest.js"></script>
+
+
+
+
+
+
