@@ -1,0 +1,22 @@
+#body {
+    width: 100%;
+    Height: 100%;
+    margin: 0 auto;
+    border:0px solid #d3d3d3;
+    overflow: hidden;
+    padding: 0px;
+    background-color: green;
+}
+
+.wrapper {
+    position: relative;
+    width: 400px;
+    height: 300px;
+}
+
+.wrapper canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background:transparent;
+}
